@@ -1,7 +1,7 @@
-package com.bezkoder.spring.datajpa.controller;
+package com.academy.spring.datajpa.controller;
 
-import com.bezkoder.spring.datajpa.model.Tutorial;
-import com.bezkoder.spring.datajpa.repository.TutorialRepository;
+import com.academy.spring.datajpa.model.Tutorial;
+import com.academy.spring.datajpa.repository.TutorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class TutorialController {
 
 	@Autowired
-	TutorialRepository tutorialRepository;
+    TutorialRepository tutorialRepository;
 
 	@GetMapping("/tutorials")
 	public ResponseEntity<List<Tutorial>> getAllTutorials(@RequestParam(required = false) String title) {
