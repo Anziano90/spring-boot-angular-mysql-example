@@ -10,6 +10,6 @@ public interface AutoreRepository extends JpaRepository<Autore, Long> {
     List<Autore>findByNome(String nome);
     List<Autore>findByCognome(String cognome);
     List<Autore>findById(long id);
-    List<Autore>findByDateBefore(Date data);
-    List<Autore>findByDateAfter(Date data);
+    List<Autore>findAutoreByDataDiNascitaAfter(Date data);
+    List<Autore>findAutoreByDataDiNascitaBefore(Date data);
 }
