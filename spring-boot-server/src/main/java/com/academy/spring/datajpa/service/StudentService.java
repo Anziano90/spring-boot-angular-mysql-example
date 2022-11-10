@@ -51,9 +51,9 @@ public class StudentService {
         return sb.build();
     }
 
-    public void deleteStudent(Student s) {
+    public void deleteStudent(Long id) {
         try {
-            studentRepository.delete(s);
+            studentRepository.deleteById(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
