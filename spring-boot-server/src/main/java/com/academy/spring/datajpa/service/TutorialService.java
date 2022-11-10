@@ -24,6 +24,7 @@ public class TutorialService {
             return null;
         }
     }
+
     public List<Tutorial> getAllPublished() {
         try {
             return tutorialRepository.findByPublished(true);
@@ -34,20 +35,33 @@ public class TutorialService {
     }
 
 
-    public Tutorial createTutorial(Tutorial t) {return new Tutorial(t.getTitle(),t.getDescription(), t.isPublished());
+    public Tutorial createTutorial(Tutorial t) {
+        Tutorial result = new Tutorial();
+        result.setAutore(t.getAutore());
+        result.setTitle(t.getTitle());
+        result.setDescription(t.getDescription());
+        result.setPublished(t.isPublished());
+        return result;
     }
 
     public Optional<Tutorial> getTutorial(Long id) {
         return tutorialRepository.findById(id);
     }
 
-    public void deleteTutorial(Long id){
+    public void deleteTutorial(Long id) {
         tutorialRepository.deleteById(id);
     }
 
-    public void deleteAllTutorial(){tutorialRepository.deleteAll();}
+    public void deleteAllTutorial() {
+        tutorialRepository.deleteAll();
+    }
 
-    public Tutorial save(Tutorial t){return tutorialRepository.saveAndFlush(t);}
+    public Tutorial save(Tutorial t) {
+        return tutorialRepository.saveAndFlush(t);
+    }
 
+    public List<Tutorial> getAllTutorialsByAuthor(String name){
+        return tutorialRepository.findAllByAutoreContainingIgnoreCase(name);
+    }
 
 }

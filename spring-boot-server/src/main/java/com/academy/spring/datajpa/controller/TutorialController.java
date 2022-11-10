@@ -102,4 +102,17 @@ public class TutorialController {
         }
     }
 
+    @GetMapping("/{authorName}")
+    public ResponseEntity<List<Tutorial>> getAllTutorialByAuthor(@RequestParam(required = true) String authorName) {
+        try {
+            List<Tutorial> tutorials = tutorialService.getAllTutorialsByAuthor(authorName);
+            if (tutorials.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(tutorials, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

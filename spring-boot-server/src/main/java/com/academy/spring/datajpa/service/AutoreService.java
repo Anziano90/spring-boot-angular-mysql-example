@@ -19,9 +19,6 @@ public class AutoreService {
 
     @Autowired
     private AutoreRepository autoreRepository;
-    //EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence");
-    //EntityManager em = entityManagerFactory.createEntityManager();
-
     @Autowired
     EntityManager em;
 
@@ -49,7 +46,11 @@ public class AutoreService {
     }
 
     public Autore createAutore(Autore a) {
-        return new Autore(a.getNome(), a.getCognome(), a.getDataDiNascita());
+        Autore result = new Autore();
+        result.setNome(a.getNome());
+        result.setCognome(a.getCognome());
+        result.setDataDiNascita(a.getDataDiNascita());
+        return result;
     }
 
     public Optional<Autore> getAutore(Long id) {
