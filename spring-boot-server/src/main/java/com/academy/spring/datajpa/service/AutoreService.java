@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +55,7 @@ public class AutoreService {
         return autoreRepository.findById(id);
     }
 
-    public void deleteAutore(Long id){
+    public void deleteAutore(Long id) {
         autoreRepository.deleteById(id);
     }
 
