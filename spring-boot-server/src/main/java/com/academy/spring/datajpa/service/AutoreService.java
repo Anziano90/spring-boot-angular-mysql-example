@@ -22,16 +22,19 @@ public class AutoreService {
     //EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("persistence");
     //EntityManager em = entityManagerFactory.createEntityManager();
 
-//    public List<Autore> getAllAutoriOrderedByCognomeNome() {
-//        Query q = em.createNativeQuery("SELECT a.name, a.surname FROM authors a ORDER BY a.surname, a.name");
-//        List authors = q.getResultList();
-//        List<Autore> resultList = new ArrayList<>();
-//        for (Object elem :
-//                authors) {
-//            resultList.add((Autore) elem);
-//        }
-//        return resultList;
-//    }
+    @Autowired
+    EntityManager em;
+
+    public List<Autore> getAllAutoriOrderedByCognomeNome() {
+        Query q = em.createNativeQuery("SELECT a.name, a.surname FROM authors a ORDER BY a.surname, a.name");
+        List authors = q.getResultList();
+        List<Autore> resultList = new ArrayList<>();
+        for (Object elem :
+                authors) {
+            resultList.add((Autore) elem);
+        }
+        return resultList;
+    }
 
     public List<Autore> getAllBySurname(String cognome) {
         if (cognome == null) {
