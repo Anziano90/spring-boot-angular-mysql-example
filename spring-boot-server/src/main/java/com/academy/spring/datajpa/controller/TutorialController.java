@@ -1,5 +1,6 @@
 package com.academy.spring.datajpa.controller;
 
+import com.academy.spring.datajpa.model.Student;
 import com.academy.spring.datajpa.model.Tutorial;
 import com.academy.spring.datajpa.service.TutorialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,17 +103,14 @@ public class TutorialController {
         }
     }
 
-    @GetMapping("/{authorName}")
-    public ResponseEntity<List<Tutorial>> getAllTutorialByAuthor(@RequestParam(required = true) String authorName) {
-        try {
-            List<Tutorial> tutorials = tutorialService.getAllTutorialsByAuthor(authorName);
-            if (tutorials.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(tutorials, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<List<Student>> findAllStudentsByTutorialid(@PathVariable("id") long id) {
+        List<Student> students = tutorialService.findStudentsFollowingTutorial(id);
+        if (students == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
 }

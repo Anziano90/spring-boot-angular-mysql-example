@@ -3,10 +3,12 @@ package com.academy.spring.datajpa.service;
 import com.academy.spring.datajpa.model.Student;
 import com.academy.spring.datajpa.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class StudentService {
     @Autowired
     StudentRepository studentRepository;
@@ -66,10 +68,11 @@ public class StudentService {
             e.printStackTrace();
         }
     }
-    public Student save(Student s){
-        try{
+
+    public Student save(Student s) {
+        try {
             return studentRepository.saveAndFlush(s);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

@@ -1,5 +1,6 @@
 package com.academy.spring.datajpa.service;
 
+import com.academy.spring.datajpa.model.Student;
 import com.academy.spring.datajpa.model.Tutorial;
 import com.academy.spring.datajpa.repository.TutorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class TutorialService {
     @Autowired
     private TutorialRepository tutorialRepository;
+
 
     public List<Tutorial> getAllByTitle(String title) {
         if (title == null) {
@@ -60,8 +62,17 @@ public class TutorialService {
         return tutorialRepository.saveAndFlush(t);
     }
 
-    public List<Tutorial> getAllTutorialsByAuthor(String name){
-        return tutorialRepository.findAllByAutoreContainingIgnoreCase(name);
+    public List<Student> findStudentsFollowingTutorial(Long id) {
+        if (tutorialRepository.findById(id).isPresent()) {
+            if (tutorialRepository.findById(id).get().getStudenti().isEmpty()) {
+                return null;
+            } else {
+                return tutorialRepository.findById(id).get().getStudenti();
+            }
+        }
+        return null;
+
+
     }
 
 }

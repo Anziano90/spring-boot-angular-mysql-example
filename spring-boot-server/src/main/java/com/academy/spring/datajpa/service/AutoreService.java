@@ -1,6 +1,7 @@
 package com.academy.spring.datajpa.service;
 
 import com.academy.spring.datajpa.model.Autore;
+import com.academy.spring.datajpa.model.Tutorial;
 import com.academy.spring.datajpa.repository.AutoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,15 @@ public class AutoreService {
             return null;
         }
     }
+    public List<Tutorial> getAllTutorialsByAuthor(Long id){
+        Optional<Autore> a=autoreRepository.findById(id);
+        try{
+            return autoreRepository.findById(id).get().getListaTutorial();}
+     catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+}
 
     public Autore save(Autore a) {
         return autoreRepository.saveAndFlush(a);

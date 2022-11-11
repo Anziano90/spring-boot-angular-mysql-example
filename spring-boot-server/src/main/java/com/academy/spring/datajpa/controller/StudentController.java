@@ -50,6 +50,16 @@ public class StudentController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus>  delete(@PathVariable("id")Long id){
+        try{
+            studentService.deleteStudent(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping
     public ResponseEntity<HttpStatus>  deleteAll(){
         try{

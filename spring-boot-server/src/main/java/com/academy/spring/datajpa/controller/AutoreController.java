@@ -1,6 +1,7 @@
 package com.academy.spring.datajpa.controller;
 
 import com.academy.spring.datajpa.model.Autore;
+import com.academy.spring.datajpa.model.Tutorial;
 import com.academy.spring.datajpa.service.AutoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class AutoreController {
     @PutMapping("/{id}")
     public ResponseEntity<Autore> updateAutore(@RequestBody Autore newAutore, @PathVariable("id") Long id) {
         Optional<Autore> autoreData = autoreService.getAutore(id);
-        if(autoreData.isPresent()) {
+        if (autoreData.isPresent()) {
             Autore a = autoreData.get();
             a.setNome(newAutore.getNome());
             a.setCognome(newAutore.getCognome());
@@ -50,10 +51,11 @@ public class AutoreController {
         try {
             Autore autore = autoreService.createAutore(newAutore);
             return new ResponseEntity<>(autore, HttpStatus.CREATED);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Autore> deleteAutore(@PathVariable("id") Long id) {
         try {
@@ -63,18 +65,19 @@ public class AutoreController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Autore> findById(@PathVariable("id") Long id) {
         Optional<Autore> a = autoreService.getAutore(id);
-        if(a.isPresent()) {
+        if (a.isPresent()) {
             return new ResponseEntity<>(a.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
-    @GetMapping("/{date}")
-    public ResponseEntity<List<Autore>> findByDateBefore(@PathVariable("date") Date date){
+    @GetMapping("/{datebefore}")
+    public ResponseEntity<List<Autore>> findByDateBefore(@PathVariable("datebefore") Date date) {
         try {
             List<Autore> autori = autoreService.getAutoreBornBefore(date);
             if (autori.isEmpty()) {
@@ -86,13 +89,27 @@ public class AutoreController {
         }
     }
 
-    public ResponseEntity<List<Autore>> findByDateAfter(@PathVariable("date") Date date){
+    @GetMapping("/{dateafter}")
+    public ResponseEntity<List<Autore>> findByDateAfter(@PathVariable("dateafter") Date date) {
         try {
             List<Autore> autori = autoreService.getAutoreBornAfter(date);
             if (autori.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(autori, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/tutorial/{id}")
+    public ResponseEntity<List<Tutorial>> getAllTutorialByAuthor(@RequestParam(required = true) Long id) {
+        try {
+            List<Tutorial> tutorials = autoreService.getAllTutorialsByAuthor(id);
+            if (tutorials.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(tutorials, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

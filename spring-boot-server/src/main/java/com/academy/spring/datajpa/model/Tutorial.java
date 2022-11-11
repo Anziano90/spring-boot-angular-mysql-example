@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "tutorials")
@@ -29,6 +30,10 @@ public class Tutorial {
 
     @Column(name = "published")
     private boolean published;
+
+    @OneToMany
+    @JoinColumn(name="tutorialSeguito")
+    private List<Student> studenti;
 
     @ManyToOne
     @JoinColumn(name = "autore_id")
