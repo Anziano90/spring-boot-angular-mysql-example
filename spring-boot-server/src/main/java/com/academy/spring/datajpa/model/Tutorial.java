@@ -1,5 +1,6 @@
 package com.academy.spring.datajpa.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -32,11 +33,12 @@ public class Tutorial {
     private boolean published;
 
     @OneToMany
-    @JoinColumn(name="tutorialSeguito")
+    @JsonManagedReference
+    @JoinColumn(name="tutorial_id")
     private List<Student> studenti;
 
     @ManyToOne
-    @JoinColumn(name = "autore_id")
+    @JoinColumn(name = "author_id")
     private Autore autore;
 
     @CreatedDate

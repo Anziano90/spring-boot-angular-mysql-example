@@ -1,5 +1,7 @@
 package com.academy.spring.datajpa.controller;
 
+import com.academy.spring.datajpa.assembler.AutoreAssembler;
+import com.academy.spring.datajpa.dto.AutoreDto;
 import com.academy.spring.datajpa.model.Autore;
 import com.academy.spring.datajpa.model.Tutorial;
 import com.academy.spring.datajpa.service.AutoreService;
@@ -8,9 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -19,14 +23,25 @@ public class AutoreController {
     @Autowired
     AutoreService autoreService;
 
+
+    AutoreAssembler autoreAssembler;
+
     @GetMapping
-    public ResponseEntity<List<Autore>> getAllAuthors(@RequestParam(required = false) String cognome) {
+    public ResponseEntity<List<AutoreDto>> getAllAuthors(@RequestParam(required = false) String cognome) {
         try {
-            List<Autore> autori = autoreService.getAllBySurname(cognome);
-            if (autori.isEmpty()) {
+            List<AutoreDto> autoriDto = new ArrayList<>();
+            List<Autore> autoriEntity = autoreService.getAllBySurname(cognome);
+            autoriEntity.stream().map(this.autoreAssembler::convertToDto).collect(Collectors.toList());
+
+            /*for (Autore a: autoriEntity) {
+                AutoreDto tmp = autoreAssembler.convertToDto(a);
+                autoriDto.add(tmp);
+            }*/
+
+            if (autoriDto.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(autori, HttpStatus.OK);
+            return new ResponseEntity<>(autoriDto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Tutorial} from '../models/tutorial.model';
+import {Student} from "../models/student.model";
 
 const baseUrl = 'http://localhost:8080/tutorials';
 
@@ -38,5 +39,9 @@ export class TutorialService {
 
   findByTitle(title: any): Observable<Tutorial[]> {
     return this.http.get<Tutorial[]>(`${baseUrl}?title=${title}`);
+  }
+
+  getStudents(id: any): Observable<Student[]>{
+    return this.http.get<Student[]>(`${baseUrl}/${id}/students`)
   }
 }

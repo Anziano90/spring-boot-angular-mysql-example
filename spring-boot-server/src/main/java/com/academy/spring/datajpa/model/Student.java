@@ -1,5 +1,6 @@
 package com.academy.spring.datajpa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -29,6 +30,7 @@ public class Student {
     private Date dataDiNascita;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name= "tutorial_id")
     private Tutorial  tutorialSeguito;
 

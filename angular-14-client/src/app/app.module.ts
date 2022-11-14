@@ -8,6 +8,8 @@ import {AppComponent} from './app.component';
 import {AddTutorialComponent} from './components/add-tutorial/add-tutorial.component';
 import {TutorialDetailsComponent} from './components/tutorial-details/tutorial-details.component';
 import {TutorialsListComponent} from './components/tutorials-list/tutorials-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import {TutorialsListComponent} from './components/tutorials-list/tutorials-list
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

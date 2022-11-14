@@ -2,6 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TutorialService} from 'src/app/services/tutorial.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Tutorial} from 'src/app/models/tutorial.model';
+import {MatTab} from "@angular/material/tabs";
+import {MatTableDataSource} from "@angular/material/table";
+import {Student} from "../../models/student.model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-tutorial-details',
@@ -18,18 +22,36 @@ export class TutorialDetailsComponent implements OnInit {
     published: false
   };
 
+  displayedColumns = ['nome', 'cognome'];
+
+  public dataSource = new MatTableDataSource<Student>;
+
   message = '';
+  private studentArray: Student[] | undefined;
 
   constructor(
     private tutorialService: TutorialService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+  }
 
   ngOnInit(): void {
     if (!this.viewMode) {
       this.message = '';
       this.getTutorial(this.route.snapshot.params["id"]);
+      this.getAllStudents(this.route.snapshot.params["id"]);
     }
+  }
+
+  getAllStudents(id: string): void {
+    this.tutorialService.getStudents(id)
+      .subscribe({
+        next: (data) => {
+          this.studentArray = data;
+          console.log(data);
+        },
+        error: (e) => console.error(e)
+      });
   }
 
   getTutorial(id: string): void {
