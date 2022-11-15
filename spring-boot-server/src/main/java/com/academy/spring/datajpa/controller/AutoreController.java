@@ -73,9 +73,8 @@ public class AutoreController {
         try {
             Autore autore=autoreAssembler.convertToEntity(newAutoreDto);
             autoreService.createAutore(autore);
-            AutoreDto dto=autoreAssembler.convertToDto(autore);
             autoreService.save(autore);
-            return new ResponseEntity<>(dto, HttpStatus.CREATED);
+            return new ResponseEntity<>(newAutoreDto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
