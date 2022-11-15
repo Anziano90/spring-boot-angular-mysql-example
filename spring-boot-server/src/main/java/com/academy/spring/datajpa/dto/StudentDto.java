@@ -1,5 +1,6 @@
 package com.academy.spring.datajpa.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -7,12 +8,14 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
-public class StudentDto {
+public class  StudentDto {
 
     private Long id;
     private String nome;
     private String cognome;
     private Date dataDiNascita;
+
+
     private TutorialDto tutorialSeguito;
     private Timestamp creationDate;
     private Timestamp lastUpdated;

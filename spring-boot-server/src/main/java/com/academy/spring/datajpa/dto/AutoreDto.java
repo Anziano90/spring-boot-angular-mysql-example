@@ -1,5 +1,6 @@
 package com.academy.spring.datajpa.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -15,6 +16,7 @@ public class AutoreDto {
     private String nome;
     private String cognome;
     private Date dataDiNascita;
+
     private List<TutorialDto> listaTutorial;
     private Timestamp creationDate;
     private Timestamp lastUpdated;
