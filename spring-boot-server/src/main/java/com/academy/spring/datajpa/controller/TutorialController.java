@@ -104,7 +104,7 @@ public class TutorialController {
     }
 
 
-    @GetMapping("/{id}/students")
+    @GetMapping("/student/{id}")
     public ResponseEntity<List<Student>> findAllStudentsByTutorialid(@PathVariable("id") long id) {
         List<Student> students = tutorialService.findStudentsFollowingTutorial(id);
         if (students == null) {
