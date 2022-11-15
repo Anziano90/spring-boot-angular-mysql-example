@@ -1,5 +1,4 @@
 package com.academy.spring.datajpa.dto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -17,9 +16,7 @@ public class TutorialDto {
 
     private boolean published;
 
-
     private List<StudentDto> studenti;
-
 
     private AutoreDto autore;
 

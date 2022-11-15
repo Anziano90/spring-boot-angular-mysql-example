@@ -1,7 +1,5 @@
 package com.academy.spring.datajpa.controller;
 
-import com.academy.spring.datajpa.assembler.StudentAssembler;
-import com.academy.spring.datajpa.dto.StudentDto;
 import com.academy.spring.datajpa.model.Student;
 import com.academy.spring.datajpa.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,44 +17,34 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    StudentAssembler studentAssembler=new StudentAssembler();
-
     @GetMapping
-    public ResponseEntity<List<StudentDto>> getAllStudents(@RequestParam(required = false) String cognome){
+    public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String cognome){
         try{
-            List<StudentDto> studentsDto=new ArrayList<>();
             List<Student> students=studentService.getAllBySurname(cognome);
             if(students.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.OK);
             }
-            for (Student s:students) {
-                studentsDto.add(studentAssembler.convertToDto(s));
-            }
-            return new ResponseEntity<>(studentsDto,HttpStatus.OK);
+            return new ResponseEntity<>(students,HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDto> getStudentsById(@PathVariable("id") long id){
-        StudentDto  studentDto;
+    public ResponseEntity<Student> getStudentsById(@PathVariable("id") long id){
         Optional<Student> student=studentService.getStudent(id);
         if(student.isPresent()){
-            studentDto=studentAssembler.convertToDto(student.get());
-            return  new ResponseEntity<>(studentDto,HttpStatus.OK);
+            return  new ResponseEntity<>(student.get(),HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping
-    public ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto studentDto){
+    public ResponseEntity<Student> createStudent(@RequestBody Student student){
         try{
-            Student s=studentService.createStudent(studentAssembler.convertToEntity(studentDto));
-            studentService.save(s);
-            StudentDto dto=studentAssembler.convertToDto(s);
-            return new ResponseEntity<>(dto,HttpStatus.CREATED);
+            Student s=studentService.createStudent(student);
+            return new ResponseEntity<>(s,HttpStatus.CREATED);
         }catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -84,16 +71,14 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDto> updateStudent(@PathVariable("id") long id,@RequestBody StudentDto newStudent){
+    public ResponseEntity<Student> updateStudent(@PathVariable("id") long id,@RequestBody Student newStudent){
         Optional<Student> student=studentService.getStudent(id);
         if(student.isPresent()){
             Student s=student.get();
             s.setCognome(newStudent.getCognome());
             s.setNome(newStudent.getNome());
             s.setDataDiNascita(newStudent.getDataDiNascita());
-            studentService.save(s);
-            StudentDto dto=studentAssembler.convertToDto(s);
-            return new ResponseEntity<>(dto,HttpStatus.OK);
+            return new ResponseEntity<>(s,HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

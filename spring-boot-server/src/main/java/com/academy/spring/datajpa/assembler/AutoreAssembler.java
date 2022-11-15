@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class AutoreAssembler {
 
-    public AutoreAssembler(){
-        this.modelMapper.getConfiguration().setPreferNestedProperties(false);
-    }
-    ModelMapper modelMapper=new ModelMapper();
+    @Autowired
+    ModelMapper modelMapper;
 
     public AutoreDto convertToDto(Autore autore) {
         AutoreDto result = modelMapper.map(autore, AutoreDto.class);
