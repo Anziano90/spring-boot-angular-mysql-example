@@ -16,8 +16,9 @@
       <li
         class="list-group-item"
         *ngFor="let student of currentTutorial.studenti; let i = index">
-        <p>{{student.nome}}</p>
-        <p>{{student.cognome}}</p>
+        <mat-card>
+          <mat-card-content>{{student.nome}} {{student.cognome}}</mat-card-content>
+        </mat-card>
       </li>
     </div>
 
