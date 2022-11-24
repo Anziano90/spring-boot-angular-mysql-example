@@ -1,6 +1,7 @@
 package com.academy.spring.datajpa.repository;
 
 import com.academy.spring.datajpa.model.Student;
+import com.academy.spring.datajpa.model.Tutorial;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
@@ -16,8 +17,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     List<Student> findByDataDiNascitaBefore(Date data);
 
-    //@Query
-    //List<Student> findAllByAutoreContainingIgnoreCase(String title);
+    List<Student> findAllByTutorialSeguito(Tutorial t);
 
 
 }

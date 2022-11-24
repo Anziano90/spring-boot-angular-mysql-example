@@ -2,6 +2,7 @@ package com.academy.spring.datajpa.service;
 
 import com.academy.spring.datajpa.model.Student;
 import com.academy.spring.datajpa.model.Tutorial;
+import com.academy.spring.datajpa.repository.StudentRepository;
 import com.academy.spring.datajpa.repository.TutorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,8 @@ import java.util.Optional;
 public class TutorialService {
     @Autowired
     private TutorialRepository tutorialRepository;
-
+    @Autowired
+    private StudentRepository studentRepository;
 
     public List<Tutorial> getAllByTitle(String title) {
         if (title == null) {
@@ -63,11 +65,12 @@ public class TutorialService {
     }
 
     public List<Student> findStudentsFollowingTutorial(Long id) {
-        if (tutorialRepository.findById(id).isPresent()) {
-            if (tutorialRepository.findById(id).get().getStudenti().isEmpty()) {
+        Optional<Tutorial> optional = tutorialRepository.findById(id);
+        if (optional.isPresent()) {
+            if (studentRepository.findAllByTutorialSeguito(optional.get()).isEmpty()) {
                 return null;
             } else {
-                return tutorialRepository.findById(id).get().getStudenti();
+                return studentRepository.findAllByTutorialSeguito(optional.get());
             }
         }
         return null;

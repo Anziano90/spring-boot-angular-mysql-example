@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Tutorial} from 'src/app/models/tutorial.model';
 import {TutorialService} from 'src/app/services/tutorial.service';
+import {Student} from "../../models/student.model";
 
 @Component({
   selector: 'app-tutorials-list',
@@ -29,6 +30,17 @@ export class TutorialsListComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+  }
+
+  retrieveAllStudents(): void{
+    this.tutorialService.getAllStudents(this.currentTutorial).
+      subscribe({
+        next: (data)=>{
+          this.currentTutorial.studenti = data;
+          console.log(data);
+        },
+        error: (e) => console.error(e)
+    });
   }
 
   refreshList(): void {

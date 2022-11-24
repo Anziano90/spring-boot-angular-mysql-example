@@ -1,5 +1,6 @@
 package com.academy.spring.datajpa.repository;
 
+import com.academy.spring.datajpa.model.Student;
 import com.academy.spring.datajpa.model.Tutorial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

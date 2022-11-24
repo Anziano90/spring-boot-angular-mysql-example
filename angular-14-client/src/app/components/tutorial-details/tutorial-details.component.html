@@ -12,6 +12,14 @@
       <label><strong>Status:</strong></label>
       {{ currentTutorial.published ? "Published" : "Pending" }}
     </div>
+    <div>
+      <li
+        class="list-group-item"
+        *ngFor="let student of currentTutorial.studenti; let i = index">
+        <p>{{student.nome}}</p>
+        <p>{{student.cognome}}</p>
+      </li>
+    </div>
 
     <a
       class="badge badge-warning"
